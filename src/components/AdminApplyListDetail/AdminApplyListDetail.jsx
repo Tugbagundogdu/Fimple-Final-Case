@@ -1,5 +1,5 @@
-
 const AdminApplyListDetail = () => {
+
   return (
     <div>
       <p>basvuruyu guncelle</p>

@@ -1,0 +1,18 @@
+.applicationForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.applicationForm form{
+    display: flex;
+    flex-direction: column;
+    width: 50% ;
+    background-color: antiquewhite;
+    padding: 40px;
+
+
+}
+
+.applicationForm form label{
+    margin: 10px 0;
+}
