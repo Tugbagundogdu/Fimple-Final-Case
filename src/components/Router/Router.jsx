@@ -18,7 +18,7 @@ const Router = () => {
         <Route path="/basvuru-sorgula" element={<ApplicationInquiry/>}/>
         <Route path="/basvuru/:basvuruNo" element={<ApplicationDetail/>}/>
         <Route path="/admin" element={<AdminPanel/>} />
-        <Route path="/admin/basvuru-listesi" element={<AdminApplyList/>}/>
+        <Route path="/admin/basvuru-listesi" element={<AdminApplyList/>}></Route>
         <Route path="/admin/basvuru/:basvuruNo" element={<AdminApplyListDetail/>}/>
     
         {/* Burada NotFound sayfasını ekleyebilirsiniz */}
