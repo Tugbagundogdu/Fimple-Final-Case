@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useFormData } from "../../context/FormDataProvider"
-import styles from './AdminApplyList.module.css'
+import styles from './adminApplyList.module.css'
 const AdminApplyList = () => {
     const navigate = useNavigate()
     const {formList} = useFormData();
