@@ -1,3 +1,4 @@
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 
  const FormDataContext = createContext();
@@ -8,21 +9,26 @@ export const useFormData = () => {
 }
 
 
+
 // eslint-disable-next-line react/prop-types
 const FormDataProvider = ({children}) =>{
   const [formList, setFormList] = useState([]); // Tüm formları saklayacak liste
 
-  useEffect(() => {
-    const storedFormDatas = localStorage.getItem('formDatas');
-    if (storedFormDatas) {
-      setFormList(JSON.parse(storedFormDatas));
-    }
-  }, []);
 
+  // sayfa render edldiğinde veritabanında veri varsa
   useEffect(() => {
-      localStorage.setItem('formDatas', JSON.stringify(formList));
-  }, [formList]); // formList'i useEffect içine ekleyerek sonsuz döngüyü önlemek için gerekli
+    fetchDataFromFirestore();
+  },[])
 
+  const fetchDataFromFirestore = async () => {
+    const db = getFirestore();
+    const querySnapshot = await getDocs(collection(db, "formList"));
+    const data = querySnapshot.docs.map((doc) => {
+      return { ...doc.data(), id: doc.id };
+    } )
+    setFormList(data);
+  }
+  
   const updateFormData = (newFormData) => {
     setFormList((prevFormList) => {
       return [...prevFormList, newFormData];

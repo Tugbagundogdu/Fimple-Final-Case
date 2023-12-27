@@ -5,6 +5,8 @@ const AdminApplyList = () => {
     const navigate = useNavigate()
     const {formList} = useFormData();
 
+    console.log(formList)
+
   return (
     <div>
       <h2>Admin Apply List</h2>
@@ -16,7 +18,7 @@ const AdminApplyList = () => {
             <h3>{form.email}</h3>
             <h3>{form.surname}</h3>
             <h3>{form.age}</h3>
-            <button onClick={() => navigate(`/admin/basvuru/${i}`)}>Basvuru Detayi</button>
+            <button onClick={() => navigate(`/admin/basvuru/${form.id}`)}>Basvuru Detayi</button>
           </div>
         ))
       }

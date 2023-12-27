@@ -1,15 +1,23 @@
-import { useNavigate } from "react-router-dom"
+// ApplicationInquiry.js
+import { useState } from "react";
+
 const ApplicationInquiry = () => {
-    const navigate = useNavigate();
+  const [inputCode, setInputCode] = useState(""); // Kullanıcının girdiği kod
+
+
   return (
     <div>
       <h2>Application Inquiry</h2>
-      <form action="">
-        <input type="text" />
-        <button onClick={() => navigate("/basvuru/{basvuruNo}")} type="submit">basvuruyu sorgula</button>
+      <form>
+        <input
+          type="text"
+          value={inputCode}
+          onChange={(e) => setInputCode(e.target.value)}
+        />
+        <button type="submit">Inquire Application</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default ApplicationInquiry
+export default ApplicationInquiry;

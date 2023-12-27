@@ -1,6 +1,9 @@
 import styles from "./applicationForm.module.css";
 import { useForm } from "react-hook-form";
 import {useFormData} from "../../context/FormDataProvider";
+import '../../firebase/firebase';
+import { getFirestore , addDoc , collection } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 const ApplicationForm = () => {
 
 
@@ -8,12 +11,22 @@ const ApplicationForm = () => {
 
     const { register, handleSubmit } = useForm();
 
+    const navigate = useNavigate();
+
+
+    // girilen form verilerini veritabanına kaydetme
+    const db = getFirestore();
+    const saveToFirestore = async (data) => {
+      const docRef = await addDoc(collection(db, "formList"), data);
+      console.log("Document written with ID: ", docRef.id);
+    }
+
     console.log(formList)
 
-
-
     const onSubmit = (data) => {
+      saveToFirestore(data);
       updateFormData(data); // Yeni verileri doğrudan updateFormData'ya geçirin
+      navigate("/basvuru-basarili");
     }
 
   return (
@@ -34,8 +47,6 @@ const ApplicationForm = () => {
         <textarea id="application" cols="30" rows="10" {...register("application")} ></textarea>
         <label htmlFor="address">Adress</label>
         <textarea  id="address" cols="30" rows="10" {...register("address")}></textarea>
-        <label htmlFor="cv">CV</label>
-        <input type="file" id="cv" {...register("cv")} />
         <button type="submit">Submit</button>
       </form>
     </div>
