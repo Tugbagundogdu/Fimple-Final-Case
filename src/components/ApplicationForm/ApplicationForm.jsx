@@ -17,8 +17,7 @@ const ApplicationForm = () => {
     // girilen form verilerini veritabanına kaydetme
     const db = getFirestore();
     const saveToFirestore = async (data) => {
-      const docRef = await addDoc(collection(db, "formList"), data);
-      console.log("Document written with ID: ", docRef.id);
+    await addDoc(collection(db, "formList"), data);
     }
 
     console.log(formList)

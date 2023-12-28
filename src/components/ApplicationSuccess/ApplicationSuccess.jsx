@@ -4,7 +4,6 @@ const ApplicationSuccess = () => {
     const navigate = useNavigate();
 
 
-
   return (
     <div>
       <h1>Application Success</h1>

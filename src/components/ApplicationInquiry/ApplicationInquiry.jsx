@@ -5,10 +5,17 @@ const ApplicationInquiry = () => {
   const [inputCode, setInputCode] = useState(""); // Kullanıcının girdiği kod
 
 
+
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+   
+  };
+
   return (
     <div>
       <h2>Application Inquiry</h2>
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <input
           type="text"
           value={inputCode}
