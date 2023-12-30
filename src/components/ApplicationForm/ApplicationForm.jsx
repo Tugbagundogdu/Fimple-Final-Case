@@ -4,6 +4,7 @@ import {useFormData} from "../../context/FormDataProvider";
 import '../../firebase/firebase';
 import { getFirestore , addDoc , collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { useGenerateUniqueCode } from "../../context/GenerateUniqueCode";
 const ApplicationForm = () => {
 
 
@@ -12,12 +13,13 @@ const ApplicationForm = () => {
     const { register, handleSubmit } = useForm();
 
     const navigate = useNavigate();
-
+    const {generateUniqueCode} = useGenerateUniqueCode();
 
     // girilen form verilerini veritabanına kaydetme
     const db = getFirestore();
     const saveToFirestore = async (data) => {
-    await addDoc(collection(db, "formList"), data);
+      const generatedUniqueCode = generateUniqueCode();
+    await addDoc(collection(db, "formList"), {...data , queryCode : generatedUniqueCode});
     }
 
     console.log(formList)

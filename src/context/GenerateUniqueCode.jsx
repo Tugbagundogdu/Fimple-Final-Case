@@ -12,8 +12,9 @@ const GenerateUniqueCodeProvider = ({children}) => {
 
     
     const generateUniqueCode = () => {
-        const code = Math.random().toString(36).substring(2, 11);
-        return code;
+        const uniqueCode = Math.random().toString(36).substring(2, 11);
+        setCode(uniqueCode);
+        return uniqueCode;
     }
 
     return (

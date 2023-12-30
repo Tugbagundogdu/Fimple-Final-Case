@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useApplicationResult } from "../../context/ApplicationResult";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 
 const ApplicationDetail = () => {
@@ -10,12 +10,20 @@ const ApplicationDetail = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const db = getFirestore();
-      const docRef = doc(db, "formList", basvuruNo);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setResult(docSnap.data().result); // Başvuru id'sine bağlı olarak cevapları getirin
-        // Diğer gerekli verileri set edebilirsiniz
+      try {
+        const db = getFirestore();
+        const formListRef = collection(db, "formList");
+        const q = query(formListRef, where("queryCode", "==", basvuruNo));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((doc) => {
+            setResult(doc.data().result); // QueryCode'a bağlı olarak sonuçları getirin
+            // Diğer gerekli verileri set edebilirsiniz
+          });
+        }
+      } catch (error) {
+        console.error("Error getting documents: ", error);
       }
     };
 
