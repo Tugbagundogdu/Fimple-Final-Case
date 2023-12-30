@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useAuthContext } from "../../context/Auth";
 
 const AdminLogin = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-
+  const {setIsLogin} = useAuthContext();
   const auth = getAuth();
 
   const onSubmit = async (data) => {
@@ -15,6 +16,7 @@ const AdminLogin = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      setIsLogin(true);
       console.log("Giriş başarılı, kullanıcı:", user);
       navigate("/admin/basvuru-listesi");
       // Başarılı giriş durumunda yönlendirme veya diğer işlemleri yapabilirsiniz
