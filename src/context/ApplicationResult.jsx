@@ -10,17 +10,19 @@ export const useApplicationResult = () =>{
 // eslint-disable-next-line react/prop-types
 const ApplicationResultProvider = ({children}) =>{
 
-    const [result, setResult] = useState([]);
+    const [results, setResults] = useState([]);
 
     
-    const updateResult = (newResult) =>{
-        setResult((prevResult) => [...prevResult, newResult]);
-    }
-
+    const updateResult = (applicationId, newResult) => {
+        setResults((prevResults) => ({
+          ...prevResults,
+          [applicationId]: [...(prevResults[applicationId] || []), newResult],
+        }));
+      };
 
     
     return (
-        <ApplicationResultContext.Provider value={{result, updateResult, setResult}}>
+        <ApplicationResultContext.Provider value={{results, updateResult, setResults}}>
             {children}
         </ApplicationResultContext.Provider>
     )
