@@ -1,46 +1,48 @@
-import { useEffect } from "react";
-import { useApplicationResult } from "../../context/ApplicationResult";
-import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { getFirestore, query, where, collection, getDocs } from "firebase/firestore";
 
-const ApplicationDetail = () => {
-
-  const {setResult} = useApplicationResult();
+const AdminApplyListDetail = () => {
+  const [selectedForm, setSelectedForm] = useState(null);
   const { basvuruNo } = useParams();
+  const [allResults, setAllResults] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const db = getFirestore();
-        const formListRef = collection(db, "formList");
-        const q = query(formListRef, where("queryCode", "==", basvuruNo));
-        const querySnapshot = await getDocs(q);
-        
-        if (!querySnapshot.empty) {
-          querySnapshot.forEach((doc) => {
-            setResult(doc.data().result); // QueryCode'a bağlı olarak sonuçları getirin
-            // Diğer gerekli verileri set edebilirsiniz
-          });
-        }
-      } catch (error) {
+    const db = getFirestore();
+    const formsRef = collection(db, 'formList');
+    const q = query(formsRef, where('queryCode', '==', basvuruNo));
+
+    getDocs(q)
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setSelectedForm(doc.data());
+          setAllResults(doc.data().results || []);
+        });
+      })
+      .catch((error) => {
         console.error("Error getting documents: ", error);
-      }
-    };
+      });
+  }, [basvuruNo]);
 
-    fetchData();
-  }, [basvuruNo, setResult]);
+  if (!selectedForm) {
+    return <div>Form bulunamadı</div>;
+  }
 
-  const {result} = useApplicationResult();
   return (
     <div>
-      <h2> Application Detail </h2>
-      <p>basvurular</p>
-      <p>son durum</p>
-      <h2> Application Detail </h2>
-      <p>Cevap: {result}</p>
-      <h2> EVET İŞTE BASVURU SONUCUNUZZZ</h2>
-    </div>
-  )
-}
+      <h2>Basvuru Detayi</h2>
+      <p>Name: {selectedForm.name}</p>
+      <p>Email: {selectedForm.email}</p>
 
-export default ApplicationDetail
+      <ul>
+        {allResults.map((result, index) => (
+          <div key={index}>
+            <li>{result}</li>
+          </div>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default AdminApplyListDetail;

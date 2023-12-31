@@ -1,60 +1,54 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useFormData } from "../../context/FormDataProvider";
-import { useEffect, useState } from "react";
-import { useApplicationResult } from "../../context/ApplicationResult";
-import { doc, getDoc, getFirestore, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 
 const AdminApplyListDetail = () => {
   const [resultText, setResultText] = useState("");
   const [selectedForm, setSelectedForm] = useState(null);
-  const { formList } = useFormData();
   const { basvuruNo } = useParams();
-  const { updateResult, results } = useApplicationResult();
 
   const [allResults, setAllResults] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editedResult, setEditedResult] = useState('');
-  const [editedResultIndex, setEditedResultIndex] = useState(null); // Güncellenen sonucun index'ini saklamak için
+  const [editedResultIndex, setEditedResultIndex] = useState(null);
 
   useEffect(() => {
     const db = getFirestore();
-    const resultsRef = doc(db, 'results', basvuruNo);
+    const formRef = doc(db, 'formList', basvuruNo);
 
-    const unsubscribe = onSnapshot(resultsRef, (doc) => {
-      if (doc.exists()) {
-        setAllResults(doc.data().results);
-      } else {
-        console.log('Sonuç bulunamadı.');
-        setAllResults([]);
-      }
-    });
-
-    return () => unsubscribe();
+    getDoc(formRef)
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          setSelectedForm(docSnap.data());
+          setAllResults(docSnap.data().results || []);
+        } else {
+          console.log('Belirtilen form bulunamadı.');
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting document:", error);
+      });
   }, [basvuruNo]);
 
-  useEffect(() => {
-    const form = formList.find((form) => form.id === basvuruNo);
-    setSelectedForm(form);
-  }, [basvuruNo, formList]);
+  const updateResultsInFirestore = async (newResult) => {
+    const db = getFirestore();
+    const formRef = doc(db, 'formList', basvuruNo);
+
+    const formDoc = await getDoc(formRef);
+    if (formDoc.exists()) {
+      const formData = formDoc.data();
+      const updatedResults = formData.results ? [...formData.results, newResult] : [newResult];
+
+      await updateDoc(formRef, { results: updatedResults });
+      setAllResults(updatedResults);
+    } else {
+      console.log('Belirtilen form bulunamadı.');
+    }
+  };
 
   const updateResults = async (e) => {
     e.preventDefault();
-    const db = getFirestore();
-    const resultsRef = doc(db, 'results', basvuruNo); // Yeni bir koleksiyon referansı oluşturuluyor
-    const resultDoc = await getDoc(resultsRef);
-
-    if (!resultDoc.exists()) {
-      // Belge yoksa oluştur
-      await setDoc(resultsRef, { results: [resultText] });
-    } else {
-      // Belge varsa, mevcut sonuçları al ve yeni sonucu ekle
-      const currentResults = resultDoc.data().results;
-      await updateDoc(resultsRef, {
-        results: [...currentResults, resultText],
-      });
-    }
-
-    updateResult(basvuruNo, resultText);
+    await updateResultsInFirestore(resultText);
     setResultText('');
   };
 
@@ -64,24 +58,21 @@ const AdminApplyListDetail = () => {
 
   const handleEditResult = (index) => {
     setEditMode(true);
-    setEditedResult(allResults[index]); // Sadece seçilen sonucu metin kutusuna yerleştirme
-    setEditedResultIndex(index); // Güncellenecek sonucun index'ini saklama
+    setEditedResult(allResults[index]);
+    setEditedResultIndex(index);
   };
 
   const handleUpdateResult = async () => {
-    // Firestore'da güncelleme işlemi
     const db = getFirestore();
-    const resultsRef = doc(db, 'results', basvuruNo);
+    const formRef = doc(db, 'formList', basvuruNo);
     const updatedResults = [...allResults];
     updatedResults[editedResultIndex] = editedResult;
-    await updateDoc(resultsRef, { results: updatedResults });
 
-    // Context'te güncelleme işlemi
-    updateResult(basvuruNo, updatedResults);
+    await updateDoc(formRef, { results: updatedResults });
+    setAllResults(updatedResults);
 
-    // Düzenleme modunu kapat
     setEditMode(false);
-    setEditedResultIndex(null); // Index'i sıfırla
+    setEditedResultIndex(null);
   };
 
   return (
@@ -89,19 +80,17 @@ const AdminApplyListDetail = () => {
       <h2>Basvuru Detayi</h2>
       <p>Name: {selectedForm.name}</p>
       <p>Email: {selectedForm.email}</p>
-      {/* Diğer form detaylarını burada gösterebilirsiniz */}
+
       <button onClick={() => setEditMode(true)}>Cevap oluştur</button>
 
-      {results[basvuruNo] && (
-        <ul>
-          {allResults.map((result, index) => (
-            <div key={index}>
-              <li>{result}</li>
-              <button onClick={() => handleEditResult(index)}>Düzenle</button>
-            </div>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {allResults.map((result, index) => (
+          <div key={index}>
+            <li>{result}</li>
+            <button onClick={() => handleEditResult(index)}>Düzenle</button>
+          </div>
+        ))}
+      </ul>
 
       <form action="" onSubmit={updateResults}>
         <label htmlFor="">Başvuruya Cevap: </label>
