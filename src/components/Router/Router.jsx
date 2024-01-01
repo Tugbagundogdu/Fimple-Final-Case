@@ -10,6 +10,7 @@ import AdminApplyListDetail from '../AdminApplyListDetail/AdminApplyListDetail';
 import AdminApplyList from '../AdminApplyList/AdminApplyList';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import { useAuthContext } from '../../context/Auth';
+import NotFound from '../NotFound/NotFound';
 
 const Router = () => {
   const {isLogin} = useAuthContext();
@@ -23,9 +24,7 @@ const Router = () => {
         <Route path="/admin" element={<AdminPanel/>} />
         <Route path="/admin/basvuru-listesi" element={<PrivateRoute Component={AdminApplyList} isAuthenticated={isLogin} />} ></Route>
         <Route path="/admin/basvuru/:basvuruNo" element={<PrivateRoute Component={AdminApplyListDetail} isAuthenticated={isLogin} />}/>
-    
-        {/* Burada NotFound sayfasını ekleyebilirsiniz */}
-        {/* <Route component={NotFound} /> */}
+        <Route path="*" element={<NotFound/>}/>
     </Routes>
   );
 };
