@@ -22,6 +22,7 @@ const AdminLogin = () => {
       const user = userCredential.user;
       setIsLogin(true);
       console.log("Successful login, user:", user);
+      localStorage.setItem("isLogin", true);
       navigate("/admin/basvuru-listesi");
     } catch (error) {
       console.log("Login error:", error.message);
