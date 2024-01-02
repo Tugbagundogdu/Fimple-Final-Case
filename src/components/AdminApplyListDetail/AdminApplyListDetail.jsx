@@ -57,14 +57,15 @@ const AdminApplyListDetail = () => {
     }
     await updateResultsInFirestore(resultText);
     setResultText('');
-
     toast.success('Response sent successfully!', {
       position: toast.POSITION.TOP_LEFT,
     });
+    setCreateResult(false);
+
   };
 
   if (!selectedForm) {
-    return <div>Form bulunamadı</div>;
+    return <div className="text-center text-3xl text-green-700 font-semibold py-10 ">Loading..</div>;
   }
 
   const handleEditResult = (index) => {
@@ -91,22 +92,27 @@ const AdminApplyListDetail = () => {
   };
 
   return (
-<div className="max-w-md mx-auto p-4 bg-white rounded shadow-lg mt-6 ">
+<div className="max-w-7xl mx-auto p-4 bg-white rounded shadow-lg mt-6 ">
   <ToastContainer />
   <h2 className="text-2xl font-bold mb-4">Apply Details</h2>
-  <p className="mb-2"><span className="font-semibold">Name:</span> {selectedForm.name}</p>
+  <p className="mb-2"><span className="font-semibold">Name:</span> {selectedForm.name} {selectedForm.surname} </p>
+  <p className="mb-4"><span className="font-semibold">TC:</span> {selectedForm.tc}</p>
+  <p className="mb-4"><span className="font-semibold">Age:</span> {selectedForm.age}</p>
   <p className="mb-4"><span className="font-semibold">Email:</span> {selectedForm.email}</p>
+  <p className="mb-4"><span className="font-semibold">Address:</span> {selectedForm.address}</p>
+  <p className="mb-4"><span className="font-semibold">Motivations:</span> {selectedForm.application}</p>
+
 
   <button
     onClick={() => setCreateResult(true)}
-    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none mb-4"
+    className="bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none mb-4"
   >
     Answer
   </button>
 
   <ul>
     {allResults.map((result, index) => (
-      <div className="flex items-center justify-between border-b py-2" key={index}>
+      <div className="flex items-center justify-between border-b p-6 cursor-pointer hover:bg-slate-200" key={index}>
         <li>{result}</li>
         <button
           onClick={() => handleEditResult(index)}
@@ -120,7 +126,7 @@ const AdminApplyListDetail = () => {
 
   {createResult && (
     <form onSubmit={updateResults} className="mt-4">
-      <label htmlFor="result" className="block mb-2 font-semibold">Appliy Answer:</label>
+      <label htmlFor="result" className="block mb-2 font-semibold">Apply Answer:</label>
       <textarea
         id="result"
         value={resultText}
