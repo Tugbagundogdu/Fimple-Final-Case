@@ -29,18 +29,38 @@ const AdminLogin = () => {
   };
 
   return (
-    <div>
-      <h2>Admin Girişi</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">Email</label>
-        <input type="email" {...register("email")} id="email" />
-        {errors.email && <p>{errors.email.message}</p>}
-        <label htmlFor="password">Password</label>
-        <input type="password" {...register("password")} id="password" />
-        {errors.password && <p>{errors.password.message}</p>}
-        <button type="submit">Giriş</button>
-      </form>
-    </div>
+    <div className="max-w-md mx-auto p-4 bg-slate-300 rounded shadow-lg mt-24">
+    <h2 className="text-2xl font-bold mb-4">Admin Girişi</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <label htmlFor="email" className="block">
+        Email
+      </label>
+      <input
+        type="email"
+        {...register("email")}
+        id="email"
+        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
+      />
+      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+      <label htmlFor="password" className="block">
+        Password
+      </label>
+      <input
+        type="password"
+        {...register("password")}
+        id="password"
+        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
+      />
+      {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+      <button
+        type="submit"
+        className="w-full bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
+      >
+        Giriş
+      </button>
+    </form>
+  </div>
+  
   );
 };
 

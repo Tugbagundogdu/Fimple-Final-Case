@@ -1,4 +1,3 @@
-import styles from "./applicationForm.module.css";
 import { useForm } from "react-hook-form";
 import {useFormData} from "../../context/FormDataProvider";
 import '../../firebase/firebase';
@@ -36,31 +35,31 @@ const ApplicationForm = () => {
     }
 
   return (
-    <div className={styles.applicationForm}>
-        <h2>DEVELOPER APPLİCATİON FORM</h2>
-      <form action="" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="name">Name</label>
-        <input type="text" id="name" {...register("name")} />
-        {errors.name && <p>{errors.name.message}</p>}
-        <label htmlFor="surname">Surname</label>
-        <input type="text"id="surname" {...register("surname")} />
-        {errors.surname && <p>{errors.surname.message}</p>}
-        <label htmlFor="email">Email</label>
-        <input type="email"  id="email" {...register("email")}   />
-        {errors.email && <p>{errors.email.message}</p>}
-        <label htmlFor="age">Age</label>
-        <input type="text" id="age" {...register("age")}   />
-        {errors.age && <p>{errors.age.message}</p>}
-        <label htmlFor="tc">TC</label>
-        <input type="text" id="tc" {...register("tc")} />
-        {errors.tc && <p>{errors.tc.message}</p>}
-        <label htmlFor="application">Application Motivation</label>
-        <textarea id="application" cols="30" rows="10" {...register("application")} ></textarea>
-        {errors.application && <p>{errors.application.message}</p>}
-        <label htmlFor="address">Adress</label>
-        <textarea  id="address" cols="30" rows="10" {...register("address")}></textarea>
-        {errors.address && <p>{errors.address.message}</p>}
-        <button type="submit">Submit</button>
+    <div className="flex flex-col items-center w-[60%] mx-auto mt-12">
+        <h2 className="text-2xl font-semibold mb-4 ">DEVELOPER APPLİCATİON FORM</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full bg-lime-200 p-12 rounded-2xl max-sm:p-2 " >
+        <label className="form-label" htmlFor="name">Name</label>
+        <input className="form-input" type="text" id="name" {...register("name")} />
+        {errors.name && <p className="form-error" >{errors.name.message}</p>}
+        <label className="form-label" htmlFor="surname">Surname</label>
+        <input className="form-input" type="text"id="surname" {...register("surname")} />
+        {errors.surname && <p   className="form-error">{errors.surname.message}</p>}
+        <label className="form-label" htmlFor="email">Email</label>
+        <input className="form-input" type="email"  id="email" {...register("email")}   />
+        {errors.email && <p  className="form-error">{errors.email.message}</p>}
+        <label className="form-label" htmlFor="age">Age</label>
+        <input className="form-input" type="text" id="age" {...register("age")}   />
+        {errors.age && <p  className="form-error" >{errors.age.message}</p>}
+        <label className="form-label" htmlFor="tc">TC</label>
+        <input className="form-input" type="text" id="tc" {...register("tc")} />
+        {errors.tc && <p  className="form-error" >{errors.tc.message}</p>}
+        <label className="form-label" htmlFor="application">Application Motivation</label>
+        <textarea className="form-input" id="application" cols="30" rows="4" {...register("application")} ></textarea>
+        {errors.application && <p  className="form-error">{errors.application.message}</p>}
+        <label className="form-label" htmlFor="address">Adress</label>
+        <textarea className="form-input" id="address" cols="30" rows="4" {...register("address")}></textarea>
+        {errors.address && <p  className="form-error" >{errors.address.message}</p>}
+        <button className="bg-gray-600 hover:bg-gray-700 mt-4 rounded-md text-white p-3" type="submit">Submit</button>
       </form>
     </div>
   )

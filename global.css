@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .form-input {
+        @apply my-1 outline-none px-4 py-2 rounded-3xl border-b-2 border-slate-700 shadow-xl;
+    }
+    .form-error {
+        @apply text-red-700 ml-4 text-sm;
+    }
+
+    .form-label{
+        @apply ml-3 text-sm mt-2 ;
+    }
+    
+}

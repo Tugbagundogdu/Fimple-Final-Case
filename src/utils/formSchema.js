@@ -15,3 +15,7 @@ export const adminSchema = yup.object().shape({
     email: yup.string().email("Email format is not valid").required("Email is required"),
     password: yup.string().required("Password is required"),
   });
+
+export const formResultSchema = yup.object().shape({
+    results: yup.string().required("Results is required"),
+})
