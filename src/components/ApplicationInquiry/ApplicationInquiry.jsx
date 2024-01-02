@@ -23,7 +23,7 @@ const navigate = useNavigate();
     if(inputCode === localQueryCode){
       navigate(`/basvuru/${inputCode}`);
     }else{
-      alert("Sorgulama kodunuz yanlıs");
+      alert("You must enter the inquiry code correctly");
     }
    
   };
@@ -66,7 +66,7 @@ const navigate = useNavigate();
   };
 
   return (
-   <div className="max-w-md mx-auto p-4 bg-white rounded shadow-lg mt-7">
+   <div className="max-w-xl mx-auto p-4 bg-white rounded shadow-lg mt-7">
     <ToastContainer/>
   <h2 className="text-2xl font-bold mb-4">Application Inquiry</h2>
   <form onSubmit={handleFormSubmit} className="mb-4 space-y-4">
@@ -79,7 +79,7 @@ const navigate = useNavigate();
     />
     <button
       type="submit"
-      className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
+      className="w-full bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
     >
       Inquire Application
     </button>
@@ -107,7 +107,7 @@ const navigate = useNavigate();
       />
       <button
         type="submit"
-        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
+        className="w-full bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
       >
         New Query Code
       </button>

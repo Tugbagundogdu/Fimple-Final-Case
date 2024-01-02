@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import {useFormData} from "../../context/FormDataProvider";
 import '../../firebase/firebase';
-import { getFirestore , addDoc , collection } from "firebase/firestore";
+import { getFirestore , addDoc , collection, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useGenerateUniqueCode } from "../../context/GenerateUniqueCode";
 import {formSchema} from "../../utils/formSchema";
@@ -18,11 +18,16 @@ const ApplicationForm = () => {
     const navigate = useNavigate();
     const {generateUniqueCode} = useGenerateUniqueCode();
 
-    // girilen form verilerini veritabanına kaydetme
     const db = getFirestore();
     const saveToFirestore = async (data) => {
       const generatedUniqueCode = generateUniqueCode();
-    await addDoc(collection(db, "formList"), {...data , queryCode : generatedUniqueCode});
+      const createdDate = serverTimestamp();
+
+      await addDoc(collection(db, "formList"), {
+        ...data,
+        queryCode: generatedUniqueCode,
+        createdAt: createdDate, 
+      });
     }
 
     console.log(formList)

@@ -31,7 +31,7 @@ const AdminLogin = () => {
 
   return (
     <div className="max-w-md mx-auto p-4 bg-slate-300 rounded shadow-lg mt-24">
-    <h2 className="text-2xl font-bold mb-4">Admin Girişi</h2>
+    <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <label htmlFor="email" className="block">
         Email
@@ -57,7 +57,7 @@ const AdminLogin = () => {
         type="submit"
         className="w-full bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
       >
-        Giriş
+        Login
       </button>
     </form>
   </div>

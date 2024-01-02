@@ -26,15 +26,15 @@ const handleCopyToClipboard = (text) => {
 
 
   return (
-<div className="max-w-md mx-auto p-6 bg-green-50 rounded-lg shadow-md text-center">
+<div className="max-w-md mx-auto p-6 bg-green-50 rounded-lg shadow-md text-center mt-12">
   <ToastContainer />
-  <h1 className="text-3xl font-bold mb-4 text-green-600">Application Success</h1>
-  <h3 className="text-xl font-semibold mb-2 text-green-700">Thank you for your application</h3>
-  <p className="text-lg mb-2 text-green-800">We will get back to you shortly</p>
-  <p className="text-lg mb-4">
-    Sorgulama Kodunuz:{" "}
+  <h1 className="text-3xl my-4 text-green-600">Application Success</h1>
+  <h3 className="text-xl font-semibold my-4">Thank you for your application</h3>
+  <p className="text-lg  my-4">We will get back to you shortly</p>
+  <p className="text-2xl text-slate-600 my-4 ">
+    Query Code:{" "}
     <button
-      className="bg-gray-300 hover:bg-gray-400  px-6 py-3 rounded-md cursor-pointer select-all"
+      className="bg-gray-300 hover:bg-gray-400  px-6 py-3 rounded-md cursor-pointer select-all my-12"
       onClick={()=>handleCopyToClipboard(code)}
     >
       {code}
@@ -43,7 +43,7 @@ const handleCopyToClipboard = (text) => {
 
   <button
     onClick={() => handleClick()}
-    className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
+    className="bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
   >
     Query Application Status
   </button>
