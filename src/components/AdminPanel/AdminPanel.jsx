@@ -25,6 +25,7 @@ const AdminLogin = () => {
       localStorage.setItem("isLogin", true);
       navigate("/admin/basvuru-listesi");
     } catch (error) {
+      alert(error.message);
       console.log("Login error:", error.message);
     }
   };

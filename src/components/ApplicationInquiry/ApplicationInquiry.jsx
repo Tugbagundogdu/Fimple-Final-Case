@@ -41,8 +41,7 @@ const navigate = useNavigate();
       const db = getFirestore();
       const userDoc = doc(db, "formList", foundUser.id);
       await updateDoc(userDoc, { queryCode: newCode });
-
-      alert("Yeni kod oluşturuldu: " + newCode);
+      console.log("New query code created: ", newCode);
     } else {
       alert("No record matching this TC was found");
     }
@@ -111,15 +110,17 @@ const navigate = useNavigate();
       >
         New Query Code
       </button>
-      <button className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md focus:outline-none" type="button" onClick={() => setNewCode(false)}>Cancel</button>
-      <div>
-        {tcMatch &&     
-        <button
-      className="bg-gray-300 hover:bg-gray-400  px-6 py-3 rounded-md cursor-pointer select-all"
+      {tcMatch &&     
+      <div
+      className="bg-green-400 hover:bg-green-500  px-6 py-3 rounded-md cursor-pointer select-all text-center "
       onClick={()=>handleCopyToClipboard(code)}
+      
     >
       {code}
-    </button>}
+    </div>}
+      <button className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md focus:outline-none" type="button" onClick={() => setNewCode(false)}>Cancel</button>
+      <div>
+    
       </div>
       </form>
   )}
