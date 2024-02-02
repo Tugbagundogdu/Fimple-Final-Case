@@ -1,25 +1,20 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-
+import {getFirestore} from "firebase/firestore"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBsSB50GgEhpIvqsIgET-Uy3vX-QPU-wP8",
-  authDomain: "fimple-final.firebaseapp.com",
-  projectId: "fimple-final",
-  storageBucket: "fimple-final.appspot.com",
-  messagingSenderId: "667823951623",
-  appId: "1:667823951623:web:fe4b74004dd5ef3142bfa2",
-  measurementId: "G-WK9JHD1WJG"
+  apiKey: "AIzaSyDCPZ0qWeHTmPJKhnO0NaBw0KPHmj_jj08",
+  authDomain: "fimple-3fa28.firebaseapp.com",
+  projectId: "fimple-3fa28",
+  storageBucket: "fimple-3fa28.appspot.com",
+  messagingSenderId: "887051100268",
+  appId: "1:887051100268:web:62822e34b76cf021f9b849"
 };
 
-// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app); 
-getAnalytics(app);
+export {db}
